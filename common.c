@@ -202,14 +202,6 @@ parse_args(int argc, char **argv)
 	return EXIT_SUCCESS;
 }
 
-#ifdef __GLIBC__
-static char *
-getprogname(void)
-{
-	return program_invocation_sort_name;
-}
-#endif
-
 /**
  * Prints a short program usage statement, explaining the
  * command line arguments and flags expected.
