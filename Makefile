@@ -16,9 +16,9 @@ all: rbatch rbatchd
 
 install: all
 	install -d $(BINDIR)
-	install -m 750 -s bhip bhipd $(BINDIR)
+	install -m 750 -s rbatch rbatchd $(BINDIR)
 	install -d $(MANDIR)
-	install -m 644 bhip.1 bhipd.1 $(MANDIR)
+	install -m 644 rbatch.1 rbatchd.1 $(MANDIR)
 
 rbatch: rbatch.c common.o
 	$(CC) $(CFLAGS) -o $@ $(LDFLAGS) $^
