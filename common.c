@@ -30,6 +30,10 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#ifndef _GNU_SOURCE
+#define _GNU_SOURCE
+#endif
+
 #include <arpa/inet.h>
 #include <err.h>
 #include <errno.h>
@@ -46,6 +50,10 @@
 #include <unistd.h>
 
 #include "common.h"
+
+#ifdef __GLIBC__
+static char * getprogname(void);
+#endif
 
 /**
  *  A wrapper around `getenv()` that errors out if it can not 
@@ -200,6 +208,13 @@ parse_args(int argc, char **argv)
 	return EXIT_SUCCESS;
 }
 
+#ifdef __GLIBC__
+static char *
+getprogname(void)
+{
+	return program_invocation_sort_name;
+}
+#endif
 
 /**
  * Prints a short program usage statement, explaining the
