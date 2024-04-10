@@ -30,9 +30,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef _GNU_SOURCE
 #define _GNU_SOURCE
-#endif
 
 #include <arpa/inet.h>
 #include <err.h>
@@ -50,10 +48,6 @@
 #include <unistd.h>
 
 #include "common.h"
-
-#ifdef __GLIBC__
-static char * getprogname(void);
-#endif
 
 /**
  *  A wrapper around `getenv()` that errors out if it can not 
@@ -229,7 +223,7 @@ usage: %s [-h] [-p #] [-v]\n\
   -H, --help         Display this help and exit.\n\
   -p, --port  port   Port number to contact the server on.\n\
   -V, --version      Print the program version number.\n\
-", msg, getprogname());
+", msg, program_invocation_short_name);
 	exit(EXIT_FAILURE);
 }
 
@@ -239,6 +233,6 @@ usage: %s [-h] [-p #] [-v]\n\
 void
 print_version(void)
 {
-	printf("%s: RBATCH_VERSION\n", getprogname());
+	printf("%s: RBATCH_VERSION\n", program_invocation_short_name);
 	exit(EXIT_FAILURE);
 }
