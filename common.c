@@ -38,6 +38,7 @@
 #include <getopt.h>
 #include <netdb.h>
 #include <netinet/in.h>
+#include <netinet/tcp.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -83,10 +84,12 @@ get_ip(struct sockaddr *sa)
 			sin = (struct sockaddr_in *)sa;
 			ip = malloc(INET_ADDRSTRLEN);
 			inet_ntop(AF_INET, &(sin->sin_addr), ip, INET_ADDRSTRLEN);
+#ifdef 0
 		case AF_INET6:
 			sin6 = (struct sockaddr_in6 *)sa;
 			ip = malloc(INET6_ADDRSTRLEN);
 			inet_ntop(AF_INET6, &(sin6->sin6_addr), ip, INET6_ADDRSTRLEN);
+#endif
 		case AF_LOCAL:
 			break;
 		default:
@@ -128,7 +131,7 @@ get_conn(const char *host, int port, int client, struct addrinfo **p, int *sockf
 			warnx("unable to create a socket");
 			continue;
 		}
-
+                setsockopt(*sockfd, SOL_TCP, TCP_NODELAY, (void *)&one, sizeof(int));
 		if (client) {
 			if (connect(*sockfd, (*p)->ai_addr, (*p)->ai_addrlen) == -1) {
 				close(*sockfd);
