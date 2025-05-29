@@ -84,12 +84,10 @@ get_ip(struct sockaddr *sa)
 			sin = (struct sockaddr_in *)sa;
 			ip = malloc(INET_ADDRSTRLEN);
 			inet_ntop(AF_INET, &(sin->sin_addr), ip, INET_ADDRSTRLEN);
-#ifdef 0
 		case AF_INET6:
 			sin6 = (struct sockaddr_in6 *)sa;
 			ip = malloc(INET6_ADDRSTRLEN);
 			inet_ntop(AF_INET6, &(sin6->sin6_addr), ip, INET6_ADDRSTRLEN);
-#endif
 		case AF_LOCAL:
 			break;
 		default:
